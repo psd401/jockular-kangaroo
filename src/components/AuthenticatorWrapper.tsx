@@ -28,28 +28,25 @@ const awsConfig = {
 
 Amplify.configure(awsConfig)
 
+const LoginHeader = () => (
+  <div className="flex justify-center mb-6">
+    <h1 className="text-xl font-semibold text-gray-800">
+      PSD Intervention Tracking
+    </h1>
+  </div>
+)
+
+const LoginFooter = () => null
+
 export function AuthenticatorWrapper({ children }: { children: ReactElement }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <div className="w-[400px] flex flex-col items-center gap-12">
-        <div className="w-full flex justify-center">
-          <Image
-            alt="Kangaroo"
-            src="/kangaroo.jpg"
-            width={200}
-            height={200}
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </div>
-        
-        <div className="w-full flex justify-center">
-          <h1 className="text-3xl font-bold text-gray-800">
-            PSD Intervention Tracking
-          </h1>
-        </div>
-        
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="bg-white rounded-lg shadow-sm p-8 w-[360px]">
         <Authenticator
+          components={{
+            Header: LoginHeader,
+            Footer: LoginFooter
+          }}
           loginMechanisms={['email']}
           services={{
             async validateCustomSignUp(formData) {
@@ -60,19 +57,10 @@ export function AuthenticatorWrapper({ children }: { children: ReactElement }) {
               return undefined
             }
           }}
+          hideSignUp={true}
         >
           {({ signOut, user }) => children}
         </Authenticator>
-        
-        <div className="w-full flex justify-center mt-8">
-          <Image
-            alt="PSD Logo"
-            src="/logo.png"
-            width={300}
-            height={100}
-            style={{ objectFit: 'contain' }}
-          />
-        </div>
       </div>
     </div>
   )
