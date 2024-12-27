@@ -65,16 +65,19 @@ export default function Home() {
 
   return (
     <div className="container">
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '20px', position: 'relative' }}>
         <BookOpen size={24} style={{ display: 'inline-block', marginRight: '8px', color: '#6CA18A' }} />
         <h1 style={{ display: 'inline-block', margin: 0 }}>Intervention Tracking System</h1>
-        <Image 
-          src="/logo.png" 
-          alt="Logo" 
-          width={48} 
-          height={48} 
-          style={{ float: 'right' }} 
-        />
+        <div style={{ position: 'absolute', right: 0, top: 0 }}>
+          <Image 
+            src="/logo.png" 
+            alt="Logo" 
+            width={48} 
+            height={48}
+            priority
+            unoptimized
+          />
+        </div>
       </div>
 
       <div style={{ marginBottom: '20px' }}>
