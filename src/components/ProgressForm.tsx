@@ -22,11 +22,11 @@ const ProgressForm: React.FC<ProgressFormProps> = ({ assignments, onAddProgress 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '8px', alignItems: 'flex-end' }}>
       <select
         value={assignmentId}
         onChange={(e) => setAssignmentId(e.target.value)}
-        className="border p-2 mr-2"
+        style={{ flex: 1 }}
       >
         <option value="">Select Assignment</option>
         {assignments.map((assignment) => (
@@ -35,20 +35,23 @@ const ProgressForm: React.FC<ProgressFormProps> = ({ assignments, onAddProgress 
           </option>
         ))}
       </select>
+
       <input
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="border p-2 mr-2"
+        style={{ width: '140px' }}
       />
+
       <input
-        type="number"
+        type="text"
         value={score}
         onChange={(e) => setScore(e.target.value)}
         placeholder="Score"
-        className="border p-2 mr-2"
+        style={{ width: '100px' }}
       />
-      <button type="submit" className="bg-purple-500 text-white px-4 py-2 rounded">
+
+      <button type="submit" className="add-progress">
         Add Progress
       </button>
     </form>

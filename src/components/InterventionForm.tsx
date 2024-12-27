@@ -47,66 +47,84 @@ const InterventionForm: React.FC<InterventionFormProps> = ({ selectedStudent, in
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit}>
       {selectedStudent && (
-        <p className="mb-2 text-[#25424C]">Selected Student: {selectedStudent.name} (ID: {selectedStudent.id})</p>
+        <div style={{ marginBottom: '8px' }}>
+          Selected Student: {selectedStudent.name} (ID: {selectedStudent.id})
+        </div>
       )}
-      <select
-        value={interventionId}
-        onChange={(e) => setInterventionId(e.target.value)}
-        className="border p-2 mr-2 mb-2 w-full bg-white text-[#25424C]"
-      >
-        <option value="">Select Intervention</option>
-        {interventions.map((intervention) => (
-          <option key={intervention.id} value={intervention.id}>{intervention.name}</option>
-        ))}
-        <option value="custom">Custom</option>
-      </select>
-      {interventionId === 'custom' && (
-        <input
-          type="text"
-          value={customIntervention}
-          onChange={(e) => setCustomIntervention(e.target.value)}
-          placeholder="Enter custom intervention"
-          className="border p-2 mr-2 mb-2 w-full bg-white text-[#25424C]"
-        />
-      )}
-      <input
-        type="date"
-        value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-        className="border p-2 mr-2 mb-2 bg-white text-[#25424C]"
-      />
-      <input
-        type="text"
-        value={frequency}
-        onChange={(e) => setFrequency(e.target.value)}
-        placeholder="Frequency (e.g., 3 times per week)"
-        className="border p-2 mr-2 mb-2 bg-white text-[#25424C]"
-      />
-      <input
-        type="date"
-        value={endDate}
-        onChange={(e) => setEndDate(e.target.value)}
-        className="border p-2 mr-2 mb-2 bg-white text-[#25424C]"
-      />
-      <input
-        type="text"
-        value={goal}
-        onChange={(e) => setGoal(e.target.value)}
-        placeholder="Goal (e.g., Improve reading fluency by 20 words per minute)"
-        className="border p-2 mr-2 mb-2 w-full bg-white text-[#25424C]"
-      />
-      <input
-        type="number"
-        value={baseline}
-        onChange={(e) => setBaseline(e.target.value)}
-        placeholder="Baseline score"
-        className="border p-2 mr-2 mb-2 w-full bg-white text-[#25424C]"
-      />
-      <button type="submit" className="bg-[#5D9068] text-white px-4 py-2 rounded hover:bg-[#466857] transition-colors">
-        Assign Intervention
-      </button>
+      
+      <div>
+        <select
+          value={interventionId}
+          onChange={(e) => setInterventionId(e.target.value)}
+          style={{ width: '100%', marginBottom: '8px' }}
+        >
+          <option value="">Select Intervention</option>
+          {interventions.map((intervention) => (
+            <option key={intervention.id} value={intervention.id}>
+              {intervention.name}
+            </option>
+          ))}
+          <option value="custom">Custom</option>
+        </select>
+
+        {interventionId === 'custom' && (
+          <div style={{ marginBottom: '8px' }}>
+            <input
+              type="text"
+              value={customIntervention}
+              onChange={(e) => setCustomIntervention(e.target.value)}
+              placeholder="Enter custom intervention"
+              style={{ width: '100%' }}
+            />
+          </div>
+        )}
+
+        <div className="form-row">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <input
+            type="text"
+            value={frequency}
+            onChange={(e) => setFrequency(e.target.value)}
+            placeholder="Frequency (e.g., 3 times"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            readOnly
+          />
+        </div>
+
+        <div style={{ marginBottom: '8px' }}>
+          <input
+            type="text"
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+            placeholder="Goal (e.g., Improve reading fluency by 20 words per minute)"
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '8px' }}>
+          <input
+            type="number"
+            value={baseline}
+            onChange={(e) => setBaseline(e.target.value)}
+            placeholder="Baseline score"
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        <button type="submit" className="assign-intervention">
+          Assign Intervention
+        </button>
+      </div>
     </form>
   );
 };

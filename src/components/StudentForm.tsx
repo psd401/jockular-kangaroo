@@ -25,29 +25,43 @@ const StudentForm: React.FC<StudentFormProps> = ({ onSelectStudent, students }) 
   };
 
   return (
-    <div className="mb-4">
-      <p className="text-sm text-gray-600 mb-2">
+    <div>
+      <div style={{ color: '#666', fontSize: '14px', marginBottom: '8px' }}>
         Note: In a full implementation, student data would be managed by an administrator or fetched from a school database.
-      </p>
+      </div>
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search student by name or ID"
-        className="border p-2 w-full mb-2"
+        style={{ width: '100%' }}
       />
       {search && (
-        <ul className="border rounded-md max-h-40 overflow-y-auto">
-          {filteredStudents.map((student) => (
-            <li 
-              key={student.id} 
-              onClick={() => handleSelect(student)}
-              className="p-2 hover:bg-gray-100 cursor-pointer"
-            >
-              {student.name} (ID: {student.id})
-            </li>
-          ))}
-        </ul>
+        <div style={{ 
+          border: '1px solid #ccc',
+          marginTop: '4px',
+          background: 'white',
+          maxHeight: '160px',
+          overflowY: 'auto'
+        }}>
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+            {filteredStudents.map((student) => (
+              <li 
+                key={student.id} 
+                onClick={() => handleSelect(student)}
+                style={{
+                  padding: '4px 8px',
+                  cursor: 'pointer',
+                  borderBottom: '1px solid #eee'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                {student.name} (ID: {student.id})
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   );
