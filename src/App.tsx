@@ -5,7 +5,7 @@ import ProgressForm from './components/ProgressForm';
 import ProgressGraph from './components/ProgressGraph';
 import { Student, Intervention, Assignment, ProgressData } from './types';
 import { BookOpen, RefreshCw } from 'lucide-react';
-import logoImage from './assets/logo.png';
+import Image from 'next/image';
 
 const App: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -69,7 +69,14 @@ const App: React.FC = () => {
             <BookOpen className="text-[#6CA18A] mr-2" size={32} />
             <h1 className="text-3xl font-bold text-[#25424C]">Intervention Tracking System</h1>
           </div>
-          <img src={logoImage} alt="Logo" className="w-16 h-16" />
+          <Image 
+            src="/logo.png" 
+            alt="Logo" 
+            width={64}
+            height={64}
+            priority
+            unoptimized
+          />
         </header>
 
         <div className="mb-4 flex justify-between items-center">
