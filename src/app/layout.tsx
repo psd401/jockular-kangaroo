@@ -17,9 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='light'>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-background min-h-screen`}>
         <Providers>
-          {children}
+          <main className="container mx-auto p-8">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

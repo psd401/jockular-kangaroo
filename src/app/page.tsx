@@ -21,19 +21,39 @@ export default function Home() {
   const [progressData, setProgressData] = useState<ProgressData[]>([]);
 
   useEffect(() => {
-    const storedStudents = localStorage.getItem('students');
-    if (storedStudents) {
-      setStudents(JSON.parse(storedStudents));
-    } else {
-      // Load demo students if no stored students
-      fetch('/mockStudentData.json')
-        .then(response => response.json())
-        .then(data => {
+    const loadStudents = async () => {
+      try {
+        const storedStudents = localStorage.getItem('students');
+        if (storedStudents) {
+          const parsedStudents = JSON.parse(storedStudents);
+          if (!Array.isArray(parsedStudents)) {
+            throw new Error('Invalid stored data format');
+          }
+          setStudents(parsedStudents);
+        } else {
+          const response = await fetch('/mockStudentData.json');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          if (!data.students || !Array.isArray(data.students)) {
+            throw new Error('Invalid data format');
+          }
           setStudents(data.students);
           localStorage.setItem('students', JSON.stringify(data.students));
-        })
-        .catch(error => console.error('Error loading demo students:', error));
-    }
+        }
+      } catch (error) {
+        console.error('Error loading student data:', error);
+        // Set some default students if everything fails
+        const defaultStudents = [
+          { id: '1', name: 'Sample Student 1' },
+          { id: '2', name: 'Sample Student 2' },
+        ];
+        setStudents(defaultStudents);
+      }
+    };
+
+    loadStudents();
   }, []);
 
   const handleSelectStudent = (student: Student) => {
@@ -52,14 +72,31 @@ export default function Home() {
 
   const simulateNightlyUpdate = async () => {
     try {
-      const response = await fetch('/mockStudentData.json');
+      console.log('Fetching student data...');
+      const response = await fetch(`${window.location.origin}/mockStudentData.json`);
+      console.log('Response:', response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
+      console.log('Received data:', data);
+      if (!data.students || !Array.isArray(data.students)) {
+        throw new Error('Invalid data format');
+      }
+      console.log('Setting students:', data.students);
+      
+      try {
+        localStorage.setItem('students', JSON.stringify(data.students));
+      } catch (storageError) {
+        console.error('Failed to save to localStorage:', storageError);
+        // Continue even if localStorage fails
+      }
+      
       setStudents(data.students);
-      localStorage.setItem('students', JSON.stringify(data.students));
       alert('Student data updated successfully!');
     } catch (error) {
       console.error('Error updating student data:', error);
-      alert('Failed to update student data. Please try again.');
+      alert(`Failed to update student data: ${error.message}`);
     }
   };
 
