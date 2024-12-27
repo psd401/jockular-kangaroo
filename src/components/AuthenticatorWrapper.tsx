@@ -4,8 +4,8 @@ import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
 import { Amplify } from 'aws-amplify'
 import Image from 'next/image'
+import { ReactElement } from 'react'
 
-// Get the current hostname for dynamic redirect URLs
 const getRedirectUrl = () => {
   if (typeof window !== 'undefined') {
     return window.location.origin
@@ -28,40 +28,52 @@ const awsConfig = {
 
 Amplify.configure(awsConfig)
 
-const components = {
-  Header() {
-    return (
-      <div className="flex justify-center p-4">
-        <Image
-          alt="PSD Logo"
-          src="/logo.png"
-          width={150}
-          height={50}
-          style={{ objectFit: 'contain' }}
-        />
-      </div>
-    )
-  }
-}
-
-export function AuthenticatorWrapper({ children }: { children: React.ReactNode }) {
+export function AuthenticatorWrapper({ children }: { children: ReactElement }) {
   return (
-    <Authenticator
-      components={components}
-      loginMechanisms={['email']}
-      services={{
-        validateCustomSignUp: async (formData) => {
-          const email = formData.email as string
-          if (!email.endsWith('@psd401.net')) {
-            return {
-              email: 'Email must be from psd401.net domain'
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="w-[400px] flex flex-col items-center gap-12">
+        <div className="w-full flex justify-center">
+          <Image
+            alt="Kangaroo"
+            src="/kangaroo.jpg"
+            width={200}
+            height={200}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
+        
+        <div className="w-full flex justify-center">
+          <h1 className="text-3xl font-bold text-gray-800">
+            PSD Intervention Tracking
+          </h1>
+        </div>
+        
+        <Authenticator
+          loginMechanisms={['email']}
+          services={{
+            async validateCustomSignUp(formData) {
+              const email = formData.email?.toString() || ''
+              if (!email.endsWith('@psd401.net')) {
+                throw new Error('Email must be from psd401.net domain')
+              }
+              return undefined
             }
-          }
-          return {}
-        }
-      }}
-    >
-      {({ signOut, user }) => children}
-    </Authenticator>
+          }}
+        >
+          {({ signOut, user }) => children}
+        </Authenticator>
+        
+        <div className="w-full flex justify-center mt-8">
+          <Image
+            alt="PSD Logo"
+            src="/logo.png"
+            width={300}
+            height={100}
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
+      </div>
+    </div>
   )
 } 
