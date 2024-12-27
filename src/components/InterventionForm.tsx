@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Intervention, Student } from '../types';
+import { Student, Intervention, Assignment } from '@/types';
 
 interface InterventionFormProps {
   selectedStudent: Student | null;

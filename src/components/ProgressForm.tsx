@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Assignment } from '../types';
+import { Assignment, ProgressData } from '@/types';
 
 interface ProgressFormProps {
   assignments: Assignment[];
