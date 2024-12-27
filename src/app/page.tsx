@@ -44,6 +44,8 @@ export default function Home() {
         }
       } catch (error) {
         console.error('Error loading student data:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        console.error(`Failed to load student data: ${errorMessage}`);
         // Set some default students if everything fails
         const defaultStudents = [
           { id: '1', name: 'Sample Student 1' },
@@ -96,7 +98,8 @@ export default function Home() {
       alert('Student data updated successfully!');
     } catch (error) {
       console.error('Error updating student data:', error);
-      alert(`Failed to update student data: ${error.message}`);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      alert(`Failed to update student data: ${errorMessage}`);
     }
   };
 
