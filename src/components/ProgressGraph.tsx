@@ -1,5 +1,17 @@
-import React, { useRef, useEffect } from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale } from 'chart.js';
+import React, { useRef } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  TimeScale,
+  ChartData,
+  ChartOptions
+} from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
 import { Assignment, ProgressData } from '../types';
@@ -11,16 +23,13 @@ interface ProgressGraphProps {
   progressData: ProgressData[];
 }
 
-const ProgressGraph: React.FC<ProgressGraphProps> = ({ assignments, progressData }) => {
-  const chartRef = useRef<ChartJS>(null);
+type DataPoint = {
+  x: Date;
+  y: number;
+};
 
-  useEffect(() => {
-    return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
-    };
-  }, []);
+const ProgressGraph: React.FC<ProgressGraphProps> = ({ assignments, progressData }) => {
+  const chartRef = useRef<ChartJS<"line", DataPoint[]>>(null);
 
   const getDatasetColor = (index: number) => {
     const colors = ['#6CA18A', '#466857', '#5D9068', '#346780', '#7396A9', '#D7CDBE', '#25424C', '#8B4513'];
@@ -95,7 +104,7 @@ const ProgressGraph: React.FC<ProgressGraphProps> = ({ assignments, progressData
     ];
   }).flat();
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -108,9 +117,9 @@ const ProgressGraph: React.FC<ProgressGraphProps> = ({ assignments, progressData
     },
     scales: {
       x: {
-        type: 'time' as const,
+        type: 'time',
         time: {
-          unit: 'day' as const
+          unit: 'day'
         },
         min: minDate,
         max: maxDate
@@ -123,7 +132,7 @@ const ProgressGraph: React.FC<ProgressGraphProps> = ({ assignments, progressData
     }
   };
 
-  const data = {
+  const data: ChartData<'line', DataPoint[]> = {
     datasets: assignmentData
   };
 
