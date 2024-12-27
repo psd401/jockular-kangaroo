@@ -121,8 +121,8 @@ const ProgressGraph: React.FC<ProgressGraphProps> = ({ assignments, progressData
         time: {
           unit: 'day'
         },
-        min: minDate,
-        max: maxDate
+        min: minDate.getTime(),
+        max: maxDate.getTime()
       },
       y: {
         beginAtZero: false,
