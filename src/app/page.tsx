@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import StudentForm from '@/components/StudentForm';
-import InterventionForm from '@/components/InterventionForm';
-import ProgressForm from '@/components/ProgressForm';
-import ProgressGraph from '@/components/ProgressGraph';
-import { Student, Intervention, Assignment, ProgressData } from '@/types';
+import StudentForm from './components/StudentForm';
+import InterventionForm from './components/InterventionForm';
+import ProgressForm from './components/ProgressForm';
+import ProgressGraph from './components/ProgressGraph';
+import { Student, Intervention, Assignment, ProgressData } from './types';
 import { BookOpen, RefreshCw } from 'lucide-react';
 import Image from 'next/image';
 
