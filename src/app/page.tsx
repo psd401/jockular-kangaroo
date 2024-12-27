@@ -145,6 +145,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <footer style={{ 
+        borderTop: '1px solid #eaeaea',
+        padding: '20px',
+        marginTop: '40px',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '12px'
+      }}>
+        <Image 
+          src="/kangaroo.jpg" 
+          alt="Jockular Kangaroo" 
+          width={32} 
+          height={32}
+          unoptimized
+        />
+        <span style={{ color: '#666' }}>
+          Jockular Kangaroo © {new Date().getFullYear()} Peninsula School District
+        </span>
+      </footer>
     </div>
   );
 }
